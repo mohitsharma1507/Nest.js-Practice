@@ -1,6 +1,15 @@
-import { Controller, Get, Param, Post, Query, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  Body,
+  ParseIntPipe,
+} from '@nestjs/common';
 
 import { CreateUserDto } from './dto/create-user.dto';
+import { PositiveIntPipe } from './pipes/positive-int/positive-int.pipe';
 
 @Controller('users')
 export class UsersController {
@@ -19,9 +28,14 @@ export class UsersController {
     return `This action filters users with role: ${role} and age: ${age}`;
   }
 
+  // @Get(':id')
+  // getUser(@Param('id', ParseIntPipe) id: number) {
+  //   return `This action returns user with ID: ${id} ,(${typeof id})`;
+  // }
+
   @Get(':id')
-  getUser(@Param('id') id: string) {
-    return `This action returns user with ID: ${id}`;
+  getUser(@Param('id', PositiveIntPipe) id: number) {
+    return `This action returns user with ID: ${id} ,(${typeof id})`;
   }
 
   @Post()
